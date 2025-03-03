@@ -15,15 +15,24 @@ public class App {
 		logger.info(String.format(s, args));
 	}
 
-	public static void main(String[] args) {
-		long start;
-		long end;
+	public static void main(String[] args) throws InterruptedException {
 
-		start = currentTimeMillis();
-		freeIncrement();
-		end = currentTimeMillis();
-		log("freeIncrement: %d", end - start);
-		
+		Thread thread = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				long start;
+				long end;
+
+				start = currentTimeMillis();
+				freeIncrement();
+				end = currentTimeMillis();
+				log("freeIncrement: %d", end - start);
+			}
+		});
+
+		// Start the thread
+		thread.start();
+		thread.join();
 
 	}
 
